@@ -1,0 +1,82 @@
+# Interview Exercise: Mock Trading Dashboard
+
+
+## Requirements
+
+### Home Screen Layout
+Create a Home page that contains the following widgets:  
+(1) My Account Widget  
+(2) Deposit History Widget  
+(3) News Widget  
+
+**Layout requirements:**  
+* On desktop: Home screen, should take the full width and height of the viewport.  
+* On tablet/mobile: Home screen should be responsive and the “News widget” should open on a side menu after clicking a button on the header.  
+
+See wireframes at the end for visual presentation.
+
+
+---
+
+
+### (1) My Account Widget
+The My Account widget should:  
+* Display the current user balance (initial balance should be arbitrary)  
+* Include a Deposit button next to the balance that will trigger the deposit flow.
+
+#### Deposit flow
+1. **Trigger**  
+   When the user clicks the Deposit button, a modal is displayed on top of the Home Screen.  
+   The Home Screen remains visible in the background.
+
+2. **Modal Content**  
+   The modal presents a form (formGroup) with the following fields:  
+   * Deposit Amount (numeric input field, up to 10,000 euros)  
+   * Deposit Method (dropdown with mock options):  
+     * Card  
+     * PayPal  
+     * Wire Transfer  
+   * Notes (optional freeform text, up to 350 characters)  
+
+3. **Call to Action**  
+   A clear primary button (e.g., “Deposit”) is displayed.
+
+4. **Submission Behavior**  
+   When the user clicks the CTA:  
+   * The entered amount is added to the user’s balance.  
+   * The updated balance is immediately reflected in the My Account widget.
+
+#### Routing Requirement (for Deposit flow)
+The deposit modal must be tied to a URL route.  
+Example: `localhost:4200/deposit`
+
+---
+
+### (2) Deposit History Widget
+The Deposit History widget should display a list of historical deposit entries initiated through the Deposit flow.  
+The list should show the details: date, amount, deposit method, and notes.
+
+---
+
+### (3) News Widget
+The News widget should:  
+* Display a list of news articles  
+* Fetch data from a public API (or a mocked local store), for example:  
+  `https://api.spaceflightnewsapi.net/v4/docs/#/articles/articles_list`
+
+Each article item should:  
+* Be clickable  
+* Redirect the user to an external link  
+* Support sorting by date (e.g. newest → oldest). Sorting preferences should persist after refreshing the page.  
+* The news container should be scrollable.
+
+
+---
+
+
+## Notes
+* No authentication is required  
+* The user is entirely mocked  
+* Focus on clarity, structure, and clean implementation  
+* Use the latest Angular features.
+* The exercise should be bootstrapped from scratch.
