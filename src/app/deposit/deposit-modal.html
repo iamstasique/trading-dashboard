@@ -1,0 +1,77 @@
+<p-dialog
+  header="Deposit"
+  [visible]="true"
+  (visibleChange)="onVisibleChange($event)"
+  [modal]="true"
+  [resizable]="false"
+  [dismissableMask]="true"
+  appendTo="body"
+  [style]="{ width: 'min(32rem, calc(100vw - 2rem))' }"
+>
+  <form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="submit()">
+    <p-fluid>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <label id="amount-label" for="amount" class="text-sm font-medium">Amount</label>
+          <p-inputnumber
+            inputId="amount"
+            formControlName="amount"
+            mode="currency"
+            currency="EUR"
+            locale="en"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            [invalid]="hasError('amount')"
+            ariaLabelledBy="amount-label"
+          />
+          <p class="text-xs text-slate-500">Up to €10,000</p>
+          @if (hasError('amount')) {
+            <p id="amount-error" class="text-sm text-red-600">{{ amountMessage() }}</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label id="method-label" for="method" class="text-sm font-medium">Deposit method</label>
+          <p-select
+            inputId="method"
+            formControlName="method"
+            [options]="depositMethods"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Deposit method"
+            appendTo="body"
+            [invalid]="hasError('method')"
+            ariaLabelledBy="method-label"
+          />
+          @if (hasError('method')) {
+            <p id="method-error" class="text-sm text-red-600">Choose a deposit method.</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label id="notes-label" for="notes" class="text-sm font-medium">Notes (optional)</label>
+          <textarea
+            pTextarea
+            id="notes"
+            rows="5"
+            [maxlength]="notesMaxLength"
+            formControlName="notes"
+            [invalid]="hasError('notes')"
+          ></textarea>
+          <p class="text-right text-xs text-slate-500">
+            {{ form.controls.notes.value.length }}/{{ notesMaxLength }}
+          </p>
+          @if (hasError('notes')) {
+            <p id="notes-error" class="text-sm text-red-600">
+              Notes must be {{ notesMaxLength }} characters or fewer.
+            </p>
+          }
+        </div>
+      </div>
+    </p-fluid>
+
+    <div class="flex justify-end">
+      <p-button type="submit" label="Deposit" />
+    </div>
+  </form>
+</p-dialog>

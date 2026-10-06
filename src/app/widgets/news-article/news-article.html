@@ -1,0 +1,17 @@
+<a
+  class="block rounded-lg border border-slate-200 p-3 transition hover:border-slate-400 hover:bg-slate-50"
+  [href]="article().url"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <p class="text-xs text-slate-500">
+    {{ article().publishedAt | date: 'medium' }}
+    @if (article().source) {
+      <span> · {{ article().source }}</span>
+    }
+  </p>
+  <h3 class="mt-1 font-medium text-slate-900">{{ article().title }}</h3>
+  @if (article().summary) {
+    <p class="mt-1 line-clamp-3 text-sm text-slate-600">{{ article().summary }}</p>
+  }
+</a>

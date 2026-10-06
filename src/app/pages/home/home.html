@@ -1,0 +1,54 @@
+<div class="flex h-full min-h-0 flex-col overflow-hidden bg-slate-100 text-slate-900">
+  <app-header (openNews)="newsOpen.set(true)" />
+
+  <main
+    class="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,26rem)]"
+  >
+    <section class="flex min-h-0 flex-col gap-4">
+      <app-account-widget [balance]="accountStore.balance()" (openDeposit)="openDeposit()" />
+      <app-deposit-history
+        class="min-h-0 flex-1"
+        [deposits]="accountStore.deposits()"
+        [storageError]="accountStore.storageError()"
+      />
+    </section>
+
+    @if (desktop()) {
+      <app-news-widget
+        class="flex h-full min-h-0 flex-col"
+        [articles]="news.articles()"
+        [sort]="news.sort()"
+        [loading]="news.loading()"
+        [errorMessage]="news.error()?.message ?? null"
+        (sortChange)="news.setSort($event)"
+        (retry)="news.reload()"
+      />
+    }
+  </main>
+
+  <router-outlet />
+
+  @if (!desktop()) {
+    <p-drawer
+      header="News"
+      position="right"
+      appendTo="body"
+      styleClass="news-drawer"
+      [visible]="newsOpen()"
+      [modal]="true"
+      [style]="{ width: 'min(100vw, 32rem)' }"
+      (visibleChange)="newsOpen.set($event)"
+    >
+      <app-news-widget
+        class="flex h-full min-h-0 flex-1 flex-col"
+        [articles]="news.articles()"
+        [sort]="news.sort()"
+        [loading]="news.loading()"
+        [errorMessage]="news.error()?.message ?? null"
+        [showHeading]="false"
+        (sortChange)="news.setSort($event)"
+        (retry)="news.reload()"
+      />
+    </p-drawer>
+  }
+</div>

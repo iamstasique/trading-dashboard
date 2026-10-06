@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+html,
+body {
+  height: 100%;
+}
+
+.news-drawer .p-drawer-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
